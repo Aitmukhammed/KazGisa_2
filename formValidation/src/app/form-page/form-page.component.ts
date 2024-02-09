@@ -15,7 +15,6 @@ export class FormPageComponent {
   radioBtn: boolean = true;
   radioBtn2: boolean = true;
 
-
   constructor(private fb: FormBuilder) {
     this.myForm = this.fb.group({
       numeric: [''],
@@ -26,7 +25,16 @@ export class FormPageComponent {
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-    this.file = file ? file.name : '';
+
+    if (file) {
+      if (file.type !== 'application/pdf') {
+        alert('Пожалуйста, выберите файл в формате PDF.');
+        event.target.value = '';
+        this.file = '';
+      } else {
+        this.file = file.name;
+      }
+    }
   }
 
   onRadioChange(option: string) {
